@@ -47,7 +47,7 @@ public class EmpleadoTest {
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
             String fechaIng = "2/8/1999";
             Date fecha = sdf.parse(fechaIng);
-            Empleado instance = new Empleado();
+            Metodos.Empleado.getInstance().calcularEdad(fecha);
             int expResult = 21;
 //            int result = 21;
 //            assertEquals(result, expResult);
