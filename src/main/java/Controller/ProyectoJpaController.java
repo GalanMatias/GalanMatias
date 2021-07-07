@@ -27,10 +27,11 @@ public class ProyectoJpaController implements Serializable {
     public ProyectoJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
-    
+
     public ProyectoJpaController() {
         this.emf = Persistence.createEntityManagerFactory("municipiolaquiaca");
     }
+    
     private EntityManagerFactory emf = null;
 
     public EntityManager getEntityManager() {
@@ -46,7 +47,7 @@ public class ProyectoJpaController implements Serializable {
             em.getTransaction().commit();
         } catch (Exception ex) {
             if (findProyecto(proyecto.getCodigoPro()) != null) {
-                throw new PreexistingEntityException("Proyecto " + proyecto + " already exists.", ex);
+                throw new PreexistingEntityException("E Proyecto " + proyecto + " Ya Existe.", ex);
             }
             throw ex;
         } finally {
@@ -89,7 +90,7 @@ public class ProyectoJpaController implements Serializable {
                 proyecto = em.getReference(Proyecto.class, id);
                 proyecto.getCodigoPro();
             } catch (EntityNotFoundException enfe) {
-                throw new NonexistentEntityException("The proyecto with id " + id + " no longer exists.", enfe);
+                throw new NonexistentEntityException("EL Codigo del Proyecto: " + id + " No ha sido Encontrado.", enfe);
             }
             em.remove(proyecto);
             em.getTransaction().commit();

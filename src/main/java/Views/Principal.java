@@ -34,6 +34,16 @@ public class Principal {
                     System.out.println("Opcion Incorrecta");
             }
         }
+        /**
+         * Las Excepciones mas Encontradas son:
+         * InputMismatchException ---> Se produce cunado intento agregar un valor de tipo String a una variable de tipo int mediante el Scanner
+         *  no puede reslverla xq me guardaba el error y no me dejaba ahcer mas operaciones
+         * NullPointerException ---> Se produce cuando intento utilizar una referencia que no señala ninguna ubicacion en memoria "arraylist, list, etc"
+         * Exception  ---> es donde deriva las excenpiones
+         * 
+         * Patron de diseño implementado Singleton
+         *  Realizo una sola instancia de Metodos.Proyecto y Metodos.Empleado en la clase munu
+        **/
     }
 
 }

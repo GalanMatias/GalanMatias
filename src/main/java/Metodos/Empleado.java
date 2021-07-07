@@ -15,8 +15,23 @@ public class Empleado {
     public static SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     public static Scanner dato = new Scanner(System.in);
 
+    private Empleado() {
+    }
+
+    private static Empleado miInstancia;
+
+    public static Empleado getInstance() {
+        if (miInstancia == null) {
+            miInstancia = new Empleado();
+        }
+        return miInstancia;
+    }
+
     public void agregar() {
         try {
+            System.out.println("+=============================+");
+            System.out.println("+ Agregando un Nuevo Empleado +");
+            System.out.println("+=============================+");
             Model.Empleado emp = new Model.Empleado();
             System.out.println("Ingrese el Nro de Legajo: ");
             emp.setNroDeLegajo(dato.nextInt());
@@ -26,39 +41,49 @@ public class Empleado {
             System.out.println("Ingrese el DNI:");
             emp.setDni(dato.nextInt());
             dato.nextLine();
-            System.out.println("Ingrese Fecha de Nacimiento (dd/mm/yyyy):");
+            System.out.println("Ingrese Fecha de Nacimiento (dia/mes/año):");
             String fech = dato.nextLine();
             Date fecha = sdf.parse(fech);
             emp.setFechaNac(fecha);
             System.out.println("Ingrese Sueldo Basico:");
             emp.setSueldo(dato.nextFloat());
             cEmpleado.create(emp);
+            System.out.println("Empledo Creado Exitosamente");
         } catch (Exception e) {
-            System.out.println("Error en: " + e.getMessage());
+            e.getMessage();
         }
     }
 
     public void eliminar() {
         List<Model.Empleado> empl = cEmpleado.findEmpleadoEntities();
-        int buscar, aux, enc;
+        int buscar, aux = 0, enc;
         try {
             mostrar();
-            System.out.println("Ingrese el DNI del Empleado a Eliminar: ");
+            System.out.println("+========================================+");
+            System.out.println("+ Ingrese el DNI del Empleado a Eliminar +");
+            System.out.println("+========================================+");
             buscar = dato.nextInt();
             for (Model.Empleado empleado : empl) {
                 enc = empleado.getDni();
                 if (enc == buscar) {
                     aux = empleado.getNroDeLegajo();
                     cEmpleado.destroy(aux);
+                    System.out.println("Empleado Eliminado Correctmente");
                 }
             }
+            if (aux == 0) {
+                System.out.println("El Empleados con DNI " + buscar + " no ha Sido Encontrados");
+            }
         } catch (NonexistentEntityException e) {
-            System.out.println("Error en: " + e.getMessage());
+            e.getMessage();
         }
     }
 
     public void modificar() {
         try {
+            System.out.println("+=========================+");
+            System.out.println("+ Modificando un Empleado +");
+            System.out.println("+=========================+");
             mostrar();
             Model.Empleado emp = new Model.Empleado();
             System.out.println("En caso de que el Nro de Legajo no coinsida con ninguno se creara uno nuevo ");
@@ -70,15 +95,16 @@ public class Empleado {
             System.out.println("Ingrese Nuevo DNI:");
             emp.setDni(dato.nextInt());
             dato.nextLine();
-            System.out.println("Ingrese Nueva Fecha de Nacimiento (dd/mm/yyyy):");
+            System.out.println("Ingrese Nueva Fecha de Nacimiento (dia/mes/año):");
             String fech = dato.nextLine();
             Date fecha = sdf.parse(fech);
             emp.setFechaNac(fecha);
-            System.out.println("Ingrese Nuevo Sueldo Basico:");
+            System.out.println("Ingrese Nuevo Sueldo :");
             emp.setSueldo(dato.nextFloat());
             cEmpleado.edit(emp);
+            System.out.println("Empleado Modificado Exitosamente");
         } catch (Exception e) {
-            System.out.println("Error en: " + e.getMessage());
+            e.getMessage();
         }
     }
 
@@ -126,9 +152,11 @@ public class Empleado {
     public Model.Empleado buscarEmpleado() {
         Model.Empleado emp = new Model.Empleado();
         List<Model.Empleado> empl = cEmpleado.findEmpleadoEntities();
-        int buscar, aux, enc;
+        int buscar, aux = 0, enc;
         try {
-            System.out.println("Ingrese el DNI del Empleado a Buscar: ");
+            System.out.println("+======================================+");
+            System.out.println("+ Ingrese el DNI del Empleado a Buscar +");
+            System.out.println("+======================================+");
             buscar = dato.nextInt();
             for (Model.Empleado empleado : empl) {
                 enc = empleado.getDni();
@@ -137,26 +165,33 @@ public class Empleado {
                     emp = cEmpleado.findEmpleado(aux);
                 }
             }
+            if (aux == 0) {
+                System.out.println("El Empleados con DNI " + buscar + " no ha Sido Encontrados");
+            }
         } catch (Exception e) {
-            System.out.println("Error en: " + e.getMessage());
+            e.getMessage();
         }
         return emp;
     }
 
     public void buscar(Model.Empleado emp) {
-        System.out.println("+-------------------------------------------------------------------------------------------+");
-        System.out.println("+                                   Empleado Encontrado                                     +");
-        System.out.println("+-------------------------------------------------------------------------------------------+");
-        System.out.println("| N° de Legajo | Nombre y Apellido |    DNI    | Fecha de Nacimiento | Sueldo Basico | Edad |");
-        System.out.println("+-------------------------------------------------------------------------------------------+");
-        System.out.printf("|    %-9s | %-17s | %-9s | %-19s | %-13s | %-4s\n",
-                emp.getNroDeLegajo(),
-                emp.getNombreYapellido(),
-                emp.getDni(),
-                sdf.format(emp.getFechaNac()),
-                emp.getSueldo(),
-                calcularEdad(emp.getFechaNac()) + "   |");
-        System.out.println("+-------------------------------------------------------------------------------------------+");
+        try {
+            System.out.println("+-------------------------------------------------------------------------------------------+");
+            System.out.println("+                                   Empleado Encontrado                                     +");
+            System.out.println("+-------------------------------------------------------------------------------------------+");
+            System.out.println("| N° de Legajo | Nombre y Apellido |    DNI    | Fecha de Nacimiento | Sueldo Basico | Edad |");
+            System.out.println("+-------------------------------------------------------------------------------------------+");
+            System.out.printf("|    %-9s | %-17s | %-9s | %-19s | %-13s | %-4s\n",
+                    emp.getNroDeLegajo(),
+                    emp.getNombreYapellido(),
+                    emp.getDni(),
+                    sdf.format(emp.getFechaNac()),
+                    emp.getSueldo(),
+                    calcularEdad(emp.getFechaNac()) + "   |");
+            System.out.println("+-------------------------------------------------------------------------------------------+");
+        } catch (NullPointerException ex) {
+            ex.getMessage();
+        }
     }
 
     ArrayList<Model.Empleado> lstEmp = new ArrayList<Model.Empleado>();
@@ -166,20 +201,26 @@ public class Empleado {
         List<Model.Empleado> empl = cEmpleado.findEmpleadoEntities();
         lstEmp = new ArrayList<Model.Empleado>();
         float buscar, enc;
-        int aux;
+        int aux, aux1 = 0;
         try {
-            System.out.println("Ingrese el Sueldo: ");
+            System.out.println("+=============================+");
+            System.out.println("+ Ingrese el Sueldo a Superar +");
+            System.out.println("+=============================+");
             buscar = dato.nextFloat();
             for (Model.Empleado empleado : empl) {
                 enc = empleado.getSueldo();
                 if (enc >= buscar) {
+                    aux1++;
                     aux = empleado.getNroDeLegajo();
                     emp = cEmpleado.findEmpleado(aux);
                     lstEmp.add(emp);
                 }
             }
+            if (aux1 == 0) {
+                System.out.println("Empleados con un sueldo igual o mayor a " + buscar + " no Encontrados");
+            }
         } catch (Exception e) {
-            System.out.println("Error en: " + e.getMessage());
+            e.getMessage();
         }
         System.out.println("+-------------------------------------------------------------------------------------------+");
         System.out.println("+                                  Empleados Encontrados                                    +");
@@ -222,7 +263,7 @@ public class Empleado {
                 }
             }
         } catch (Exception ex) {
-            System.out.println("Error: " + ex.getMessage());
+            ex.getMessage();
         }
 
         System.out.println("+-------------------------------------------------------------------------------------------+");

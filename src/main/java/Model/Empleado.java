@@ -29,7 +29,8 @@ import javax.persistence.TemporalType;
     , @NamedQuery(name = "Empleado.findByNombreYapellido", query = "SELECT e FROM Empleado e WHERE e.nombreYapellido = :nombreYapellido")
     , @NamedQuery(name = "Empleado.findByDni", query = "SELECT e FROM Empleado e WHERE e.dni = :dni")
     , @NamedQuery(name = "Empleado.findByFechaNac", query = "SELECT e FROM Empleado e WHERE e.fechaNac = :fechaNac")
-    , @NamedQuery(name = "Empleado.findBySueldo", query = "SELECT e FROM Empleado e WHERE e.sueldo = :sueldo")})
+    , @NamedQuery(name = "Empleado.findBySueldo", query = "SELECT e FROM Empleado e WHERE e.sueldo = :sueldo")
+    , @NamedQuery(name = "Empleado.findByCodigoPro", query = "SELECT e FROM Empleado e WHERE e.codigoPro = :codigoPro")})
 public class Empleado implements Serializable, Comparable<Empleado> {
 
     private static final long serialVersionUID = 1L;
@@ -47,6 +48,8 @@ public class Empleado implements Serializable, Comparable<Empleado> {
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "sueldo", precision = 12, scale = 0)
     private Float sueldo;
+    @Column(name = "codigoPro")
+    private Integer codigoPro;
 
     public Empleado() {
     }
@@ -95,6 +98,14 @@ public class Empleado implements Serializable, Comparable<Empleado> {
         this.sueldo = sueldo;
     }
 
+    public Integer getCodigoPro() {
+        return codigoPro;
+    }
+
+    public void setCodigoPro(Integer codigoPro) {
+        this.codigoPro = codigoPro;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -121,7 +132,7 @@ public class Empleado implements Serializable, Comparable<Empleado> {
     }
     
     @Override
-    public int compareTo(Empleado otroEmp){
+    public int compareTo(Empleado otroEmp) {
         return getNombreYapellido().compareTo(otroEmp.getNombreYapellido());
     }
     

@@ -6,7 +6,7 @@ public class Menu {
     public static Scanner dato = new Scanner(System.in);
 
     public static void menuEmpleado() {
-        Metodos.Empleado emp = new Metodos.Empleado();
+        
         int opcion = 0;
         while (opcion != 8) {
             System.out.println("+========================================+");
@@ -25,25 +25,26 @@ public class Menu {
             opcion = dato.nextInt();
             switch (opcion) {
                 case 1:
-                    emp.agregar();
+                    Metodos.Empleado.getInstance().agregar();
                     break;
                 case 2:
-                    emp.eliminar();
+                    Metodos.Empleado.getInstance().eliminar();
                     break;
                 case 3:
-                    emp.modificar();
+                    Metodos.Empleado.getInstance().modificar();
                     break;
                 case 4:
-                    emp.mostrar();
+                    Metodos.Empleado.getInstance().mostrar();
                     break;
                 case 5:
-                    emp.mayorEdad();
+                    Metodos.Empleado.getInstance().mayorEdad();
                     break;
                 case 6:
-                    emp.listaSueldos();
+                    Metodos.Empleado.getInstance().listaSueldos();
                     break;
                 case 7:
-                    emp.buscar(emp.buscarEmpleado());
+                    Metodos.Empleado.getInstance().buscar(Metodos.Empleado.getInstance().buscarEmpleado());
+                    break;
                 case 8:
                     System.out.println("Saliendo del Administardor de Empleados");
                     break;
@@ -54,7 +55,7 @@ public class Menu {
     }
     
     public static void menuProyecto() {
-        Metodos.Proyecto pro = new Metodos.Proyecto();
+        
         int op = 0;
         while (op != 10) {
             System.out.println("+========================================+");
@@ -63,9 +64,9 @@ public class Menu {
             System.out.println("+  1. Agregar Proyecto                   +");
             System.out.println("+  2. Eliminar Proyecto                  +");
             System.out.println("+  3. Listar Proyectos                   +");
-            System.out.println("+  4. Agregar Empleado al Proyecto       +");
+            System.out.println("+  4. Agregar Empleado a un Proyecto     +");
             System.out.println("+  5. Quitar Empleado del Proyecto       +");
-            System.out.println("+  6. Listar Datos del Proyecto          +");
+            System.out.println("+  6. Listar Empleados del Proyecto      +");
             System.out.println("+  7. Cacular el Total de Montos         +");
             System.out.println("+  8. Calcular Monto por Empleado        +");
             System.out.println("+  9. Listar Proyectos por Rango (fecha) +");
@@ -75,26 +76,31 @@ public class Menu {
             op = dato.nextInt();
             switch (op) {
                 case 1:
-                    pro.agregar();
+                    Metodos.Proyecto.getInstance().agregar();
                     break;
                 case 2:
-                    pro.eliminar();
+                    Metodos.Proyecto.getInstance().eliminar();
                     break;
                 case 3:
-                    pro.mostrar();
+                    Metodos.Proyecto.getInstance().mostrar();
                     break;
                 case 4:
+                    Metodos.Proyecto.getInstance().agragarEmp();
                     break;
                 case 5:
+                    Metodos.Proyecto.getInstance().quitarEmp();
                     break;
                 case 6:
+                    Metodos.Proyecto.getInstance().mostrarEmpDelPro();
                     break;
                 case 7:
-                    pro.montoTotal();
+                    Metodos.Proyecto.getInstance().montoTotal();
                     break;
                 case 8:
+                    Metodos.Proyecto.getInstance().calcularMontoIndividual();
                     break;
                 case 9:
+                    Metodos.Proyecto.getInstance().listaPorFecha();
                     break;
                 case 10:
                     System.out.println("Saliendo del Administardor de Proyectos");

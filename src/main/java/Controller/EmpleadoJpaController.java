@@ -27,10 +27,10 @@ public class EmpleadoJpaController implements Serializable {
     public EmpleadoJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
-    
     public EmpleadoJpaController() {
         this.emf = Persistence.createEntityManagerFactory("municipiolaquiaca");
     }
+    
     private EntityManagerFactory emf = null;
 
     public EntityManager getEntityManager() {
@@ -46,7 +46,7 @@ public class EmpleadoJpaController implements Serializable {
             em.getTransaction().commit();
         } catch (Exception ex) {
             if (findEmpleado(empleado.getNroDeLegajo()) != null) {
-                throw new PreexistingEntityException("Empleado " + empleado + " already exists.", ex);
+                throw new PreexistingEntityException("El Empleado " + empleado + " Ya Existe.", ex);
             }
             throw ex;
         } finally {
@@ -89,7 +89,7 @@ public class EmpleadoJpaController implements Serializable {
                 empleado = em.getReference(Empleado.class, id);
                 empleado.getNroDeLegajo();
             } catch (EntityNotFoundException enfe) {
-                throw new NonexistentEntityException("The empleado with id " + id + " no longer exists.", enfe);
+                throw new NonexistentEntityException("EL Nro de DNI: " + id + " No ha Sido Encontrado.", enfe);
             }
             em.remove(empleado);
             em.getTransaction().commit();
